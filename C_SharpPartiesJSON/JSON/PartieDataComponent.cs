@@ -9,7 +9,8 @@ namespace C_SharpPartiesJSON.JSON
 {
     public class PartieDataComponent
     {
-        public static string Path = "C:\\Users\\migue\\source\\repos\\WPFJSONMVVM\\WPFMySQLMVVM\\Data\\parties.json";
+        //Poner ruta del JSON, si la pongo relativa no funciona
+        public static string Path = "C:\\Users\\migue\\Desktop\\Parties\\C_SharpPartiesJSON\\C_SharpPartiesJSON\\Data\\parties.json";
         public static ObservableCollection<Partie> readPartie()
         {
             string contenidoJson = File.ReadAllText(Path);
@@ -40,7 +41,7 @@ namespace C_SharpPartiesJSON.JSON
         {
             try
             {
-                // Leer el contenido del archivo
+                // Leemos el JSON
                 string contenidoJson = File.ReadAllText(Path);
 
                 // Deserializar el contenido a un objeto RootObject
@@ -49,7 +50,7 @@ namespace C_SharpPartiesJSON.JSON
                 // Obtener la colección de partidos
                 ObservableCollection<Partie> parties = rootObject.Parties;
 
-                // Buscar el partido por el nombre y eliminarlo
+                // Buscamos el partido y lo borramos
                 Partie partieToRemove = parties.FirstOrDefault(p => p.name == name);
 
                 if (partieToRemove != null)
@@ -71,25 +72,25 @@ namespace C_SharpPartiesJSON.JSON
         {
             try
             {
-                // Leer el contenido del archivo
+                // Leemos archivo
                 string contenidoJson = File.ReadAllText(Path);
 
                 // Deserializar el contenido a un objeto RootObject
                 RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(contenidoJson);
 
-                // Obtener la colección de partidos
+                // colección de partidos
                 ObservableCollection<Partie> parties = rootObject.Parties;
 
-                // Buscar el partido existente por el nombre
+                // Buscamos partido por nombre
                 Partie existingPartie = parties.FirstOrDefault(p => p.name == name);
 
                 if (existingPartie != null)
                 {
-                    // Modificar las propiedades del partido existente con los nuevos valores
+                    // Modificamos partido
                     existingPartie.seat = seat;
                     existingPartie.validVot = validVotos;
 
-                    // Volver a serializar y escribir en el archivo
+                    // Serializmos
                     contenidoJson = JsonConvert.SerializeObject(rootObject, Newtonsoft.Json.Formatting.Indented);
                     File.WriteAllText(Path, contenidoJson);
                 }
@@ -100,7 +101,6 @@ namespace C_SharpPartiesJSON.JSON
             }
             catch (Exception ex)
             {
-                // Manejar cualquier excepción que pueda ocurrir durante la operación
                 Console.WriteLine($"Error al actualizar el partido: {ex.Message}");
             }
         }
@@ -118,25 +118,19 @@ namespace C_SharpPartiesJSON.JSON
         {
             try
             {
-                // Leer el contenido del archivo
                 string contenidoJson = File.ReadAllText(Path);
-
-                // Deserializar el contenido a un objeto RootObject
                 RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(contenidoJson);
 
-                // Obtener la colección de fechas
+                // Obtenemos el partido
                 ObservableCollection<Dates> dates = rootObject.Dates;
 
-                // Agregar la nueva fecha
+                // Agregar partido
                 dates.Add(date);
-
-                // Volver a serializar y escribir en el archivo
                 contenidoJson = JsonConvert.SerializeObject(rootObject, Newtonsoft.Json.Formatting.Indented);
                 File.WriteAllText(Path, contenidoJson);
             }
             catch (Exception ex)
             {
-                // Manejar cualquier excepción que pueda ocurrir durante la operación
                 Console.WriteLine($"Error al insertar la fecha: {ex.Message}");
             }
         }
@@ -146,27 +140,20 @@ namespace C_SharpPartiesJSON.JSON
         {
             try
             {
-                // Leer el contenido del archivo
                 string contenidoJson = File.ReadAllText(Path);
-
-                // Deserializar el contenido a un objeto RootObject
                 RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(contenidoJson);
 
-                // Obtener la colección de fechas
+                // Obtenemos partido
                 ObservableCollection<Dates> dates = rootObject.Dates;
 
-                // Acceder directamente al primer elemento (único en este caso)
                 Dates dateToUpdate = dates.FirstOrDefault();
 
                 if (dateToUpdate != null)
                 {
-                    // Actualizar la fecha existente con los valores proporcionados
                     dateToUpdate.pobla = existingDate.pobla;
                     dateToUpdate.absten = existingDate.absten;
                     dateToUpdate.nullVotes = existingDate.nullVotes;
                     dateToUpdate.votesV = existingDate.votesV;
-
-                    // Volver a serializar y escribir en el archivo
                     contenidoJson = JsonConvert.SerializeObject(rootObject, Newtonsoft.Json.Formatting.Indented);
                     File.WriteAllText(Path, contenidoJson);
                 }
@@ -177,7 +164,6 @@ namespace C_SharpPartiesJSON.JSON
             }
             catch (Exception ex)
             {
-                // Manejar cualquier excepción que pueda ocurrir durante la operación
                 Console.WriteLine($"Error al actualizar la fecha: {ex.Message}");
             }
         }
