@@ -9,8 +9,8 @@ namespace C_SharpPartiesJSON.JSON
 {
     public class PartieDataComponent
     {
-        //Poner ruta del JSON, si la pongo relativa no funciona
-        public static string Path = "C:\\Users\\migue\\Desktop\\Parties\\C_SharpPartiesJSON\\C_SharpPartiesJSON\\Data\\parties.json";
+        //ruta relativa
+        public static string Path = "..\\..\\..\\Data\\parties.json";
         public static ObservableCollection<Partie> readPartie()
         {
             string contenidoJson = File.ReadAllText(Path);
